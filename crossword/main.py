@@ -202,7 +202,7 @@ async def main():
                             if rect.collidepoint(x, y):
                                 if selected_cell:
                                     row, col = selected_cell
-                                    if key == '⌫':
+                                    if key == 'del':
                                         editable_grid[row][col] = " "
                                     else:
                                         editable_grid[row][col] = key
