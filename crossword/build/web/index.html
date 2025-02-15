@@ -484,6 +484,30 @@ frameborder="1"
     }
 
     </script>
+    <script>
+        // Add touch event support
+        document.addEventListener('touchstart', function(event) {
+            const touch = event.touches[0];
+            const mouseEvent = new MouseEvent('mousedown', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            document.dispatchEvent(mouseEvent);
+        }, false);
 
+        document.addEventListener('touchmove', function(event) {
+            const touch = event.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            document.dispatchEvent(mouseEvent);
+        }, false);
+
+        document.addEventListener('touchend', function(event) {
+            const mouseEvent = new MouseEvent('mouseup', {});
+            document.dispatchEvent(mouseEvent);
+        }, false);
+    </script>
 </body>
 </html>
