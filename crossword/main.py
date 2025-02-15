@@ -3,7 +3,7 @@ import time
 import asyncio
 
 # Constants
-grid_size = 5 # or 15
+grid_size = 6 # or 15
 cell_size = 50
 width, height = grid_size * cell_size + 300, grid_size * cell_size  # Extra space for hints
 
@@ -16,33 +16,14 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
 # Hardcoded solution crossword
-solution_crossword = None
-if grid_size == 5:
-    solution_crossword = [
-        ["P", "E", "R", "U", ""],
-        ["O", "M", "A", "N", ""],
-        ["T", "U", "P", "", ""],
-        ["", "", "", "", ""],
-        ["", "", "", "", ""]
-    ]
-elif grid_size == 15:
-    solution_crossword = [
-        ["P", "E", "R", "U", "", "", "", "", "", "", "", "", "", "", ""],
-        ["O", "M", "A", "N", "", "", "", "", "", "", "", "", "", "", ""],
-        ["T", "U", "P", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
-    ]
+solution_crossword = [
+    ['A', 'R', 'R', 'E', 'S', 'T'],
+    ['B', 'I', 'N', 'D', 'I', ''],
+    ['B', 'A', 'N', 'D', 'R', 'A'],
+    ['R', '', '', 'Y', 'E', 'S'],
+    ['', '', '', '', '', ''],
+    ['', '', '', '', '', '']
+]
 
 editable_grid = [[" " if cell != "" else "" for cell in row] for row in solution_crossword]
 
@@ -60,14 +41,16 @@ def generate_numbers():
                 numbering[row][col] = num
                 num += 1
 
-    hints_across[1] = "A country in South America"
-    hints_across[5] = "A country in the Middle East"
-    hints_across[6] = "Animal that goes 'mahhhhh'"
+    hints_across[1] = "What criminals are afraid of"
+    hints_across[6] = "Forehead-wear"
+    hints_across[7] = "Where people from Khar say they're from"
 
-    hints_down[1] = "Smoking it makes people high"
-    hints_down[2] = "A bird that can't fly"
-    hints_down[3] = "Expected from the Blacks"
-    hints_down[4] = "One in Spanish"
+    hints_down[1] = "It is of itself"
+    hints_down[2] = "An Indian name with several spellings"
+    hints_down[3] = "Recurring Neural Network"
+    hints_down[4] = "Circle your arm in a water tub to form this"
+    hints_down[5] = "Respectful addressal"
+    hints_down[8] = "Used for comparing"
     
     return numbering, hints_across, hints_down
 
