@@ -13,11 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 🔹 Set up Python
+      # 🔹 Set up Python (Version 3.11.11)
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Adjust Python version as needed
+          python-version: '3.11.11'
 
       - name: Create virtual environment
         run: python -m venv wxenv
@@ -31,12 +31,12 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'  # Adjust version based on GitHub Pages support
+          ruby-version: '3.1'  # Adjust if needed for compatibility with GitHub Pages
 
-      - name: Install Bundler & Jekyll
+      - name: Install Bundler & Jekyll (if Gemfile exists)
         run: |
           gem install bundler
-          bundle install
+          if [ -f Gemfile ]; then bundle install; fi
 
       # 🔹 Build the Jekyll site
       - name: Build Jekyll site
