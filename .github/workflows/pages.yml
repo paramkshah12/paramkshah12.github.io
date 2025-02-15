@@ -13,10 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 🔹 Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Use the required Python version
+          python-version: '3.x'  # Adjust Python version as needed
 
       - name: Create virtual environment
         run: python -m venv wxenv
@@ -26,11 +27,24 @@ jobs:
           source wxenv/bin/activate
           pip install -r requirements.txt
 
+      # 🔹 Set up Ruby & Jekyll
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'  # Adjust version based on GitHub Pages support
+
+      - name: Install Bundler & Jekyll
+        run: |
+          gem install bundler
+          bundle install
+
+      # 🔹 Build the Jekyll site
       - name: Build Jekyll site
         run: bundle exec jekyll build
 
+      # 🔹 Upload the generated site
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: github-pages
-          path: _site  # Ensure this is the correct build output folder
+          path: _site  # Ensure this is the correct output folder
