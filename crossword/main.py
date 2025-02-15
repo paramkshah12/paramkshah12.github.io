@@ -36,7 +36,8 @@ def generate_numbers():
     for row in range(grid_size):
         for col in range(grid_size):
             if solution_crossword[row][col] != "" and (
-                row == 0 or col == 0 or solution_crossword[row-1][col] == "" or solution_crossword[row][col-1] == ""
+                (row == 0 or solution_crossword[row-1][col] == "") and (row != grid_size - 1 and solution_crossword[row+1][col] != "") or
+                (col == 0 or solution_crossword[row][col-1] == "") and (col != grid_size - 1 and solution_crossword[row][col+1] != "")
             ):
                 numbering[row][col] = num
                 num += 1
@@ -44,6 +45,7 @@ def generate_numbers():
     hints_across[1] = "What criminals are afraid of"
     hints_across[6] = "Forehead-wear"
     hints_across[7] = "Where people from Khar say they're from"
+    hints_across[9] = "A bank that faced crises in 2020"
 
     hints_down[1] = "It is of itself"
     hints_down[2] = "An Indian name with several spellings"
