@@ -162,6 +162,22 @@ def draw_keyboard(screen):
             keyboard_x += key_width + key_gap
         keyboard_y += key_height + key_gap
 
+def draw_start_screen(screen):
+    screen.fill(BLACK)
+    font = pygame.font.Font(None, 48)
+    text = font.render("Ready to start?", True, WHITE)
+    text_rect = text.get_rect(center=(width // 2, height // 2 - 50))
+    screen.blit(text, text_rect)
+
+    button_rect = pygame.Rect(width // 2 - 75, height // 2, 150, 50)
+    pygame.draw.rect(screen, GREEN, button_rect)
+    font = pygame.font.Font(None, 36)
+    text = font.render("HELL YES", True, BLACK)
+    text_rect = text.get_rect(center=button_rect.center)
+    screen.blit(text, text_rect)
+
+    return button_rect
+
 async def main():
     pygame.init()
     screen = pygame.display.set_mode((width, height))
@@ -174,54 +190,68 @@ async def main():
     game_won = False
     incorrect_message = False
     elapsed_time = 0
+    game_started = False
 
     while running:
         screen.fill(WHITE)
-        if not game_won:
-            elapsed_time = time.time() - start_time
-        draw_grid(screen, editable_grid, selected_cell, elapsed_time, game_won, incorrect_message)
-        draw_keyboard(screen)
-        pygame.display.flip()
+        if not game_started:
+            button_rect = draw_start_screen(screen)
+            pygame.display.flip()
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            elif event.type == pygame.MOUSEBUTTONDOWN and not game_won:
-                x, y = event.pos
-                if y < grid_size * cell_size:
-                    col, row = x // cell_size, y // cell_size
-                    if col < grid_size and solution_crossword[row][col] != '':
-                        selected_cell = (row, col)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    x, y = event.pos
+                    if button_rect.collidepoint(x, y):
+                        game_started = True
+                        start_time = time.time()
+        else:
+            if not game_won:
+                elapsed_time = time.time() - start_time
+            draw_grid(screen, editable_grid, selected_cell, elapsed_time, game_won, incorrect_message)
+            draw_keyboard(screen)
+            pygame.display.flip()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN and not game_won:
+                    x, y = event.pos
+                    if y < grid_size * cell_size:
+                        col, row = x // cell_size, y // cell_size
+                        if col < grid_size and solution_crossword[row][col] != '':
+                            selected_cell = (row, col)
+                    else:
+                        # Handle keyboard clicks
+                        keyboard_y = grid_size * cell_size + 20
+                        for i, row_keys in enumerate(keyboard_keys):
+                            keyboard_x = 10
+                            for j, key in enumerate(row_keys):
+                                rect = pygame.Rect(keyboard_x, keyboard_y, key_width, key_height)
+                                if rect.collidepoint(x, y):
+                                    if selected_cell:
+                                        row, col = selected_cell
+                                        if key == 'del':
+                                            editable_grid[row][col] = " "
+                                        else:
+                                            editable_grid[row][col] = key
+                                        incorrect_message = False
+                                keyboard_x += key_width + key_gap
+                            keyboard_y += key_height + key_gap
+                elif event.type == pygame.KEYDOWN and selected_cell and not game_won:
+                    row, col = selected_cell
+                    if event.unicode.isalpha():
+                        editable_grid[row][col] = event.unicode.upper()
+                    elif event.key == pygame.K_BACKSPACE:
+                        editable_grid[row][col] = " "
+                        incorrect_message = False
+
+            if is_filled():
+                if check_solution():
+                    game_won = True
                 else:
-                    # Handle keyboard clicks
-                    keyboard_y = grid_size * cell_size + 20
-                    for i, row_keys in enumerate(keyboard_keys):
-                        keyboard_x = 10
-                        for j, key in enumerate(row_keys):
-                            rect = pygame.Rect(keyboard_x, keyboard_y, key_width, key_height)
-                            if rect.collidepoint(x, y):
-                                if selected_cell:
-                                    row, col = selected_cell
-                                    if key == 'del':
-                                        editable_grid[row][col] = " "
-                                    else:
-                                        editable_grid[row][col] = key
-                                    incorrect_message = False
-                            keyboard_x += key_width + key_gap
-                        keyboard_y += key_height + key_gap
-            elif event.type == pygame.KEYDOWN and selected_cell and not game_won:
-                row, col = selected_cell
-                if event.unicode.isalpha():
-                    editable_grid[row][col] = event.unicode.upper()
-                elif event.key == pygame.K_BACKSPACE:
-                    editable_grid[row][col] = " "
-                    incorrect_message = False
-
-        if is_filled():
-            if check_solution():
-                game_won = True
-            else:
-                incorrect_message = True
+                    incorrect_message = True
 
         clock.tick(30)
         await asyncio.sleep(0)

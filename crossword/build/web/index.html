@@ -237,7 +237,7 @@ config = {
     _sdl2 : "canvas",
     user_canvas : 0,
     user_canvas_managed : 0,
-    ume_block : 1,
+    ume_block : 0,
     can_close : 0,
     archive : "crossword",
     gui_debug : 3,
@@ -484,30 +484,6 @@ frameborder="1"
     }
 
     </script>
-    <script>
-        // Add touch event support
-        document.addEventListener('touchstart', function(event) {
-            const touch = event.touches[0];
-            const mouseEvent = new MouseEvent('mousedown', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            document.dispatchEvent(mouseEvent);
-        }, false);
 
-        document.addEventListener('touchmove', function(event) {
-            const touch = event.touches[0];
-            const mouseEvent = new MouseEvent('mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            document.dispatchEvent(mouseEvent);
-        }, false);
-
-        document.addEventListener('touchend', function(event) {
-            const mouseEvent = new MouseEvent('mouseup', {});
-            document.dispatchEvent(mouseEvent);
-        }, false);
-    </script>
 </body>
 </html>
