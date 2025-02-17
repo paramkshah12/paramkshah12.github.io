@@ -3,9 +3,9 @@ import time
 import asyncio
 
 # Constants
-grid_size = 6  # or 15
+grid_size = 7
 cell_size = 50
-width, height = grid_size * cell_size + 300, grid_size * cell_size + 120  # Extra space for hints and keyboard
+width, height = grid_size * cell_size + 400, grid_size * cell_size + 150  # Extra space for hints and keyboard
 
 # Colors
 WHITE = (255, 255, 255)
@@ -17,12 +17,13 @@ RED = (255, 0, 0)
 
 # Hardcoded solution crossword
 solution_crossword = [
-    ['A', 'R', 'R', 'E', 'S', 'T'],
-    ['B', 'I', 'N', 'D', 'I', ''],
-    ['B', 'A', 'N', 'D', 'R', 'A'],
-    ['R', '', '', 'Y', 'E', 'S'],
-    ['', '', '', '', '', ''],
-    ['', '', '', '', '', '']
+    ["J", "E", "R", "O", "M", "E", ""],
+    ["H", "Y", "M", "N", "", "P", "M"],
+    ["A", "", "S", "E", "", "I", "U"],
+    ["N", "O", "E", "M", "I", "C", "S"],
+    ["S", "M", "", "A", "I", "", "L"],
+    ["I", "A", "", "N", "I", "T", "I"],
+    ["", "R", "H", "Y", "T", "H", "M"]
 ]
 
 editable_grid = [[" " if cell != "" else "" for cell in row] for row in solution_crossword]
@@ -54,17 +55,27 @@ def generate_numbers():
                 numbering[row][col] = num
                 num += 1
 
-    hints_across[1] = "What criminals are afraid of"
-    hints_across[6] = "Forehead-wear"
-    hints_across[7] = "Where people from Khar say they're from"
-    hints_across[9] = "A bank that faced crises in 2020"
+    hints_across[1] = "He has the most expensive 'Good Afternoon'"
+    hints_across[6] = "What Coldplay occupy themselves with on the weekend"
+    hints_across[7] = "Air quality measure"
+    hints_across[9] = "Dhano isn't autistic, per __, just a little special"
+    hints_across[10] = "A metric for pharma stuff"
+    hints_across[11] = "Intellectual Science (no chance you're getting this)"
+    hints_across[14] = "A common message after fumbling: Uk ily __"
+    hints_across[15] = "Current talk of the town"
+    hints_across[16] = "A suffix of several countries"
+    hints_across[17] = "Policy"
+    hints_across[19] = "I don't need no vowels"
 
-    hints_down[1] = "It is of itself"
-    hints_down[2] = "An Indian name with several spellings"
-    hints_down[3] = "Recurring Neural Network"
-    hints_down[4] = "Circle your arm in a water tub to form this"
-    hints_down[5] = "Respectful addressal"
-    hints_down[8] = "Used for comparing"
+    hints_down[1] = "Home to perhaps the bravest woman"
+    hints_down[2] = "One of the Big 4"
+    hints_down[3] = "Or the standard deviation, kind of"
+    hints_down[4] = "An antonym pair, and a type of relation"
+    hints_down[5] = "Ramayan and Mahabharat, for two"
+    hints_down[8] = "He must get a circumcision"
+    hints_down[12] = "Kashmir's chief minister"
+    hints_down[13] = "Technical institute that focuses on IT"
+    hints_down[18] = "A suffix for non-podium finishers"
 
     return numbering, hints_across, hints_down
 
