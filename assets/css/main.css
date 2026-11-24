@@ -1293,3 +1293,16 @@ section,
 .stat-card i { font-size: 1.8rem; }
 .stat-card h3 { font-size: 1.6rem; margin: 0.5rem 0 0.25rem; }
 .stat-card p { margin: 0; font-size: 0.95rem; }
+
+/* Art: keep cards clear of screen edges */
+.video-card { max-width: 90%; margin-left: auto; margin-right: auto; }
+
+/* Hero: black text */
+.hero .container h2, .hero .container p, .hero .typed, .hero .typed-cursor { color: #000; }
+
+/* Teachings: program cards */
+.teaching-card { border: 1px solid rgba(0, 0, 0, 0.12); border-radius: 8px; padding: 1.75rem; margin-bottom: 2rem; }
+.teaching-card h3 { font-size: 1.4rem; padding-bottom: 0.5rem; margin-bottom: 0.75rem; border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+.teaching-card p { margin-bottom: 0.5rem; }
+.teaching-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.5rem 1.5rem; }
+.teaching-links li { margin: 0; }

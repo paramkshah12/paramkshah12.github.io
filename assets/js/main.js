@@ -187,20 +187,15 @@
   window.addEventListener("load", initSwiper);
 
   /**
-   * Correct scrolling position upon page load for URLs containing hash links.
+   * Always start at the top of the page on load. This stops the browser
+   * from restoring an old scroll position, and the hash-scroll jump is removed.
    */
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
   window.addEventListener('load', function(e) {
-    if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
-        setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
-          });
-        }, 100);
-      }
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
     }
   });
 
